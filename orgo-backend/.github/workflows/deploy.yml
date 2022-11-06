@@ -1,0 +1,56 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Build and Deploy to Google Cloud
+
+env:
+  CLOUDSDK_PYTHON_SITEPACKAGES: 1
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: True
+  GCP_PROJECT: backend-deployment-358514
+  IMAGE: orgo-earth
+  GCP_REGION: us-central1-a
+  service_account_email: 782503144404-compute@developer.gserviceaccount.com
+  # service_account_key: backend-deployment-358514-875300c4a7a3.p12
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    # Authenticate with gcloud credentials 
+    - name: Configure Google Cloud credentials
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.1
+      with:
+        version: 275.0.0
+        # service_account_email: $service_account_email
+        service_account_key: ${{ secrets.service_account_key }}
+        export_default_credentials: true
+
+
+    # Set up Docker
+    - run: |
+        gcloud auth configure-docker
+    # Build the Docker image
+    - name: Build
+      run: |        
+        docker build -t "$GCP_PROJECT"/"$IMAGE":"$GITHUB_SHA"
+          
+    # Push the Docker image to Google Container Registry
+    # - name: Publish
+    #   run: |
+    #     docker push gcr.io/$GCP_PROJECT/$IMAGE:$GITHUB_SHA
+    # Deploy to Google Cloud Run
+    - name: Deploy
+      run: |
+        gcloud run deploy $IMAGE \
+          --service-account ${{ secrets.GCP_EMAIL }} \
+          --project $GCP_PROJECT \
+          --image $GCP_PROJECT/$IMAGE:$GITHUB_SHA \
+          --platform managed \
+          --region $GCP_REGION \
+          --allow-unauthenticated

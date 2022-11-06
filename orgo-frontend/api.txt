@@ -1,0 +1,142 @@
+Users:
+
+API:  /api/users/login  POST  //login
+body: email:required,password:required
+params:
+query
+
+
+
+API:   GET  /api/users/me //me api
+body: 
+params:
+query
+headers:Bearer token
+
+API:   GET  /api/users/:name //test  unique name
+body: 
+params:
+query
+headers:Bearer token
+
+
+API:   POST   api/users/register
+body:  name, userName:required, email:required, password:required, phone, type:required
+params:
+query
+
+
+
+API:   PUT /api/users/profile   //update user
+body:  email:required,name ... ... things to update
+params:
+query
+headers:Bearer token
+
+
+
+API:   GET /api/users/profile/:username  //get users detail
+body:  
+params: username
+query
+headers:Bearer token
+
+
+API:   DELETE /api/users/:id //delete a user
+body:  
+params: userId
+query
+headers:Bearer token
+
+
+Task
+
+API:  /api/tasks/create  //A community can create a task   POST
+params:
+body: name:required,
+    description:required,
+    address:required,
+    startDate,
+    status,
+    startDate,
+
+query:
+header : bearer token
+
+
+API:  /api/tasks    //List all the available tasks GET
+params:
+body:
+query:status
+
+API:  /api/tasks/location    //List all the locations  GET
+params:
+body:
+query:
+
+
+API:  /api/tasks/task/:location    //List all the tasks in that location  GET
+params:
+body:
+query:status
+
+API:  /api/tasks/community/:id  //List all the tasks of a community  GET
+params: userId
+body:
+query:
+header : bearer token
+
+API:  /api/tasks/task/:id //A community can update a task PUT
+params: 
+body: ... things to update
+query: userId
+header : bearer token
+
+API:  /api/tasks/task/:id   //A community can fetch a task data  GET
+params: id
+body:
+query:
+header : bearer token
+
+
+API:  /api/tasks/task/:id  DELETE //delete a task
+params:id
+body:
+query:
+header : bearer token
+
+
+Evidence
+
+API:  /api/evidences/submit   GET //submit an evidence
+header : Bearer token
+query:
+body: taskId:required, userId:required, evidenceDetails:required, evidenceImages, tags
+params:
+
+
+API:  /api/evidences/approve/:taskId/:userId   POST //approve an evidence
+header : Bearer token
+query:
+body: 
+params: taskId:required, userId:required
+
+
+API:  /api/evidences/submit/:userId     GET //fetch all evidences of a volunteer
+query:approval=approved or approval=To be approved 
+body: 
+params:userId:required
+
+
+
+API:  /api/evidences/submit/community/:communityId GET  //List all the to be reviewed evidences
+query:approval=approved or approval=To be approved 
+body: 
+params:communityId:required
+
+
+
+
+TODO APIS
+get all the community accounts 
+get task by community account name no token should be required
