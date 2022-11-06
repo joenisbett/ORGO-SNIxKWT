@@ -20,7 +20,7 @@ Join today by starting with creating an account at the live prototype https://sn
 https://youtu.be/ph7usBpjH_4
 
 ### Pitch PDF
-[Contribution guidelines for this project](ORGO Pitch Deck for SNI x KWT.pdf)
+[ORGO Pitch Deck](ORGO%20Pitch%20Deck%20for%20SNI%20x%20KWT.pdf)
 
 ### Miro Board
 https://miro.com/app/board/uXjVPSlSXT4=/
